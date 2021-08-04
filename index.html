@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil Component Starter</title>
+
+    <!-- import webcomponent for graph dependencies, please dont change the order of these imports -->
+    <script src="assets/graphlib.min.js"></script>
+    <script src="assets/dagre.min.js"></script>
+    <script src="assets/jquery.min.js"></script>
+    <script src="assets/lodash.min.js"></script>
+    <script src="assets/backbone.min.js"></script>
+    <script src="assets/joint.min.js"></script>
+
+    <script type="module" src="dist/graph-webcomponent/graph-webcomponent.esm.js"></script>
+    <script nomodule src="dist/graph-webcomponent/graph-webcomponent.js"></script>
+</head>
+
+<body>
+    <jointjs-graph-component></jointjs-graph-component>
+</body>
+
+<script>
+    var jsonToParse = {
+        "entities": [
+            {
+                "id": 1,
+                "desc": "Company A",
+                "desc2": "",
+                "desc3": ""
+            },
+            {
+                "id": 2,
+                "desc": "Company PQR",
+                "desc2": "Holding Company",
+                "desc3": ""
+            },
+            {
+                "id": 3,
+                "desc": "Mr.P",
+                "desc2": "Shareholder",
+                "desc3": "20%"
+            },
+            {
+                "id": 4,
+                "desc": "Mr.R",
+                "desc2": "Shareholder",
+                "desc3": "20%"
+            },
+            {
+                "id": 5,
+                "desc": "Company XYZ",
+                "desc2": "Holding Company",
+                "desc3": ""
+            },
+            {
+                "id": 6,
+                "desc": "Mr.X",
+                "desc2": "Shareholder",
+                "desc3": "2%"
+            },
+            {
+                "id": 7,
+                "desc": "Mr.Y",
+                "desc2": "Shareholder",
+                "desc3": "2%"
+            },
+            {
+                "id": 8,
+                "desc": "Company LMN",
+                "desc2": "Holding Company",
+                "desc3": ""
+            },
+            {
+                "id": 9,
+                "desc": "Mr.A",
+                "desc2": "Shareholder",
+                "desc3": "48%"
+            }
+        ],
+        "links": [
+            {
+                "from": 1,
+                "to": 2,
+                "desc": "40%"
+            },
+            {
+                "from": 1,
+                "to": 5,
+                "desc": "40%"
+            },
+            {
+                "from": 1,
+                "to": 9,
+                "desc": "20%"
+            },
+            {
+                "from": 2,
+                "to": 3,
+                "desc": "50%"
+            },
+            {
+                "from": 2,
+                "to": 4,
+                "desc": "50%"
+            },
+            {
+                "from": 5,
+                "to": 6,
+                "desc": "25%"
+            },
+            {
+                "from": 5,
+                "to": 7,
+                "desc": "5%"
+            },
+            {
+                "from": 5,
+                "to": 8,
+                "desc": "70%"
+            },
+            {
+                "from": 8,
+                "to": 9,
+                "desc": "100%"
+            }
+        ]
+    }
+
+    setTimeout(() => {
+        const select = document.querySelector('jointjs-graph-component');
+        select.setAttribute("graphData", JSON.stringify(jsonToParse));
+    }, 0);
+</script>
+
+</html>
