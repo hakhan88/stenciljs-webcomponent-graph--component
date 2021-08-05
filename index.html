@@ -13,13 +13,11 @@
     <script src="assets/lodash.min.js"></script>
     <script src="assets/backbone.min.js"></script>
     <script src="assets/joint.min.js"></script>
-
-    <script type="module" src="dist/graph-webcomponent/graph-webcomponent.esm.js"></script>
-    <script nomodule src="dist/graph-webcomponent/graph-webcomponent.js"></script>
 </head>
 
 <body>
     <jointjs-graph-component></jointjs-graph-component>
+    <div id="myholder"></div>
     <script>
         var jsonToParse = {
             "entities": [
@@ -127,8 +125,108 @@
             ]
         }
 
-        const select = document.querySelector('jointjs-graph-component');
-        select.setAttribute("graphData", JSON.stringify(jsonToParse));
+        function CellNodeModel(id, text, text2, text3, text4) {
+            this.id = id;
+            this.text = text;
+            this.text2 = text2;
+            this.text3 = text3;
+            this.text4 = text4;
+            this.fullDescriptionText = (this.text ? this.text + '\n' : '')
+                + (this.text2 ? '(' + this.text2 + ')\n' : '')
+                + (this.text3 ? '(' + this.text3 + ')\n' : '')
+                + (this.text4 ? '(' + this.text4 + ')\n' : '');
+        }
+        CellNodeModel.prototype.getModel = function () {
+            return {
+                "type": "standard.Rectangle",
+                "size": {
+                    "width": 150,
+                    "height": 80
+                },
+                "angle": 0,
+                "id": this.id,
+                "attrs": {
+                    "body": {
+                        "fill": "white",
+                        "cursor": "pointer",
+                        "stoke": "black"
+                    },
+                    "label": {
+                        "fill": "black",
+                        "text": this.fullDescriptionText,
+                        "cursor": "pointer"
+                    }
+                }
+            }
+        }
+
+        function CellLinkModel(idFrom, idTo, text) {
+            this.idFrom = idFrom;
+            this.idTo = idTo;
+            this.text = text;
+        }
+        CellLinkModel.prototype.getModel = function () {
+            return {
+                "type": "standard.Link",
+                "source": {
+                    "id": this.idFrom
+                },
+                "target": {
+                    "id": this.idTo
+                },
+                "connector": {
+                    "name": "jumpover",
+                    "args": {
+                        "size": 10
+                    }
+                },
+                "router": {
+                    "name": "orthogonal"
+                },
+                "labels": [
+                    {
+                        "attrs": {
+                            "text": {
+                                "text": this.text
+                            },
+                        }
+                    }
+                ],
+            }
+        }
+
+
+        const getGraphdata = function () {
+            return jsonToParse;
+        }
+
+        const cells = [];
+        getGraphdata().entities.map(function (entity) {
+            var newModel = new CellNodeModel(entity.id, entity.desc, entity.desc2, entity.desc3, entity.desc4)
+            cells.push(newModel.getModel());
+        });
+        getGraphdata().links.map(function (entity) {
+            var newModel = new CellLinkModel(entity.from, entity.to, entity.desc)
+            cells.push(newModel.getModel());
+        });
+
+        const graph = new joint.dia.Graph;
+
+        new joint.dia.Paper({
+            el: document.getElementById('myholder'),
+            model: graph,
+            width: 1200,
+            height: 1200,
+            gridSize: 1,
+            background: {
+                color: 'white'
+            },
+            interactive: true
+        });
+
+        graph.fromJSON({ cells: cells });
+        joint.layout.DirectedGraph.layout(graph, { setLinkVertices: false });
+
     </script>
 </body>
 

@@ -1,1 +1,0 @@
-import{p as promiseResolve,b as bootstrapLazy}from"./index-1793929e.js";var patchBrowser=function(){var r=import.meta.url;var o={};if(r!==""){o.resourcesUrl=new URL(".",r).href}return promiseResolve(o)};patchBrowser().then((function(r){return bootstrapLazy([["jointjs-graph-component",[[1,"jointjs-graph-component",{graphdata:[1]}]]]],r)}));

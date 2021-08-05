@@ -1,1 +1,0 @@
-import{p as a,b as p}from"./p-2808a6bd.js";(()=>{const p=import.meta.url,o={};return""!==p&&(o.resourcesUrl=new URL(".",p).href),a(o)})().then((a=>p([["p-ca87eee6",[[1,"jointjs-graph-component",{graphdata:[1]}]]]],a)));
