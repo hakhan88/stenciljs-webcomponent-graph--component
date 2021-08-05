@@ -1,4 +1,4 @@
-import { r as registerInstance, h } from './index-ae2e6f07.js';
+import { r as registerInstance, h } from './index-1793929e.js';
 
 class CellLinkModel {
   constructor(idFrom, idTo, text) {
@@ -81,35 +81,29 @@ const MyComponent = class {
     return JSON.parse(this.graphdata);
   }
   componentDidLoad() {
-    var that = this;
-    setTimeout(() => {
-      console.log('componentDidLoad');
-      const cells = [];
-      that.getGraphdata().entities.map(entity => {
-        var newModel = new CellNodeModel(entity.id, entity.desc, entity.desc2, entity.desc3, entity.desc4);
-        cells.push(newModel.getModel());
-      });
-      that.getGraphdata().links.map(entity => {
-        var newModel = new CellLinkModel(entity.from, entity.to, entity.desc);
-        cells.push(newModel.getModel());
-      });
-      const graph = new joint.dia.Graph;
-      new joint.dia.Paper({
-        el: document.querySelector('jointjs-graph-component').shadowRoot.getElementById('myholder'),
-        model: graph,
-        width: 1200,
-        height: 1200,
-        gridSize: 1,
-        background: {
-          color: 'white'
-        },
-        interactive: true
-      });
-      graph.fromJSON({ cells });
-      joint.layout.DirectedGraph.layout(graph, { setLinkVertices: false });
-      console.log('componentDidLoad', graph);
-      console.log('that.getGraphdata()', that.getGraphdata());
-    }, 2000);
+    const cells = [];
+    this.getGraphdata().entities.map(entity => {
+      var newModel = new CellNodeModel(entity.id, entity.desc, entity.desc2, entity.desc3, entity.desc4);
+      cells.push(newModel.getModel());
+    });
+    this.getGraphdata().links.map(entity => {
+      var newModel = new CellLinkModel(entity.from, entity.to, entity.desc);
+      cells.push(newModel.getModel());
+    });
+    const graph = new joint.dia.Graph;
+    new joint.dia.Paper({
+      el: document.querySelector('jointjs-graph-component').shadowRoot.getElementById('myholder'),
+      model: graph,
+      width: 1200,
+      height: 1200,
+      gridSize: 1,
+      background: {
+        color: 'white'
+      },
+      interactive: true
+    });
+    graph.fromJSON({ cells });
+    joint.layout.DirectedGraph.layout(graph, { setLinkVertices: false });
   }
   render() {
     return h("div", null, h("div", { id: "myholder" }));

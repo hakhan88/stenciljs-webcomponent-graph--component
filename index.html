@@ -127,10 +127,8 @@
             ]
         }
 
-        setTimeout(function () {
-            const select = document.querySelector('jointjs-graph-component');
-            select.setAttribute("graphData", JSON.stringify(jsonToParse));
-        }, 0);
+        const select = document.querySelector('jointjs-graph-component');
+        select.setAttribute("graphData", JSON.stringify(jsonToParse));
     </script>
 </body>
 
