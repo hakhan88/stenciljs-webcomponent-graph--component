@@ -196,21 +196,21 @@
         }
 
 
-        const getGraphdata = function () {
+        var getGraphdata = function () {
             return jsonToParse;
         }
 
-        const cells = [];
-        getGraphdata().entities.map(function (entity) {
+        var cells = [];
+        getGraphdata().entities.forEach(function (entity) {
             var newModel = new CellNodeModel(entity.id, entity.desc, entity.desc2, entity.desc3, entity.desc4)
             cells.push(newModel.getModel());
         });
-        getGraphdata().links.map(function (entity) {
+        getGraphdata().links.forEach(function (entity) {
             var newModel = new CellLinkModel(entity.from, entity.to, entity.desc)
             cells.push(newModel.getModel());
         });
 
-        const graph = new joint.dia.Graph;
+        var graph = new joint.dia.Graph;
 
         new joint.dia.Paper({
             el: document.getElementById('myholder'),
