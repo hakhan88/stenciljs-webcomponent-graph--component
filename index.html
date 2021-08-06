@@ -7,6 +7,7 @@
     <title>Stencil Component Starter</title>
 
     <!-- import webcomponent for graph dependencies, please dont change the order of these imports -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
     <script src="assets/graphlib.min.js"></script>
     <script src="assets/dagre.min.js"></script>
     <script src="assets/jquery.min.js"></script>
@@ -188,10 +189,10 @@
                         "attrs": {
                             "text": {
                                 "text": this.text
-                            },
+                            }
                         }
                     }
-                ],
+                ]
             }
         }
 
@@ -201,11 +202,11 @@
         }
 
         var cells = [];
-        getGraphdata().entities.forEach(function (entity) {
+        _.map(getGraphdata().entities, function (entity) {
             var newModel = new CellNodeModel(entity.id, entity.desc, entity.desc2, entity.desc3, entity.desc4)
             cells.push(newModel.getModel());
         });
-        getGraphdata().links.forEach(function (entity) {
+        _.map(getGraphdata().links, function (entity) {
             var newModel = new CellLinkModel(entity.from, entity.to, entity.desc)
             cells.push(newModel.getModel());
         });
